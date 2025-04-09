@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Paper Scissors Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .game-container {
+            text-align: center;
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+        }
+        .choices {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        .choice {
+            font-size: 2rem;
+            padding: 1rem;
+            cursor: pointer;
+            background-color: #f0f0f0;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .choice:hover {
+            background-color: #e0e0e0;
+        }
+        #result {
+            margin-top: 2rem;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        @media (max-width: 600px) {
+            .game-container {
+                width: 90%;
+                padding: 1rem;
+            }
+            .choices {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <h1>Rock Paper Scissors</h1>
+        <div class="choices">
+            <button class="choice" onclick="play('rock')">✊</button>
+            <button class="choice" onclick="play('paper')">✋</button>
+            <button class="choice" onclick="play('scissors')">✌️</button>
+        </div>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        function play(userChoice) {
+            const choices = ['rock', 'paper', 'scissors'];
+            const computerChoice = choices[Math.floor(Math.random() * 3)];
+            
+            let result;
+            if (userChoice === computerChoice) {
+                // Reroll computer's choice if it's a tie
+                let newComputerChoice;
+                do {
+                    newComputerChoice = choices[Math.floor(Math.random() * 3)];
+                } while (newComputerChoice === userChoice);
+                computerChoice = newComputerChoice;
+            }
+            
+            if (
+                (userChoice === 'rock' && computerChoice === 'scissors') ||
+                (userChoice === 'paper' && computerChoice === 'rock') ||
+                (userChoice === 'scissors' && computerChoice === 'paper')
+            ) {
+                result = "You win!";
+            } else {
+                result = "Computer wins!";
+            }
+            
+            document.getElementById('result').innerHTML = `
+                You chose ${userChoice}.<br>
+                Computer chose ${computerChoice}.<br>
+                ${result}
+            `;
+        }
+    </script>
+</body>
+</html>
+    
